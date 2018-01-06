@@ -1,0 +1,156 @@
+#
+# NOTE! Don't add files that are generated in specific
+# subdirectories here. Add them in the ".gitignore" file
+# in that subdirectory instead.
+#
+# NOTE! Please use 'git ls-files -i --exclude-standard'
+# command after changing this file, to see if there are
+# any tracked files which get ignored after the change.
+#
+# Normal rules
+#
+.*
+*.o
+*.o.*
+*.a
+*.s
+*.ko
+*.so
+*.so.dbg
+*.mod.c
+*.i
+*.lst
+*.symtypes
+*.order
+modules.builtin
+*.elf
+*.bin
+*.gz
+*.bz2
+*.lzma
+*.xz
+*.lzo
+*.patch
+*.gcno
+
+#
+# Top-level generic files
+#
+kernel/tags
+kernel/TAGS
+kernel/linux
+kernel/vmlinux
+kernel/vmlinuz
+kernel/System.map
+kernel/Module.markers
+kernel/Module.symvers
+
+#
+# Debian directory (make deb-pkg)
+#
+/debian/
+
+#
+# git files that we don't want to ignore even it they are dot-files
+#
+!.gitignore
+!.mailmap
+
+#
+# Generated include files
+#
+kernel/include/config
+kernel/include/linux/version.h
+kernel/include/linux/autoconf.h
+kernel/include/generated
+kernel/arch/*/include/generated
+kernel/arch/arm/mach-msm/smd_rpc_sym.c
+kernel/arch/arm/boot/Image
+kernel/arch/arm/boot/zImage
+kernel/arch/arm/boot/compressed/ashldi3.S
+kernel/arch/arm/boot/compressed/hyp-stub.S
+kernel/arch/arm/boot/compressed/lib1funcs.S
+kernel/arch/arm/boot/compressed/piggy.*
+kernel/arch/arm/boot/compressed/vmlinux
+kernel/arch/arm/boot/compressed/vmlinux.lds
+kernel/arch/arm/kernel/vmlinux.lds
+kernel/arch/arm/mach-mt6582/muse6582_b2l_l/dct/dct/inc/
+kernel/drivers/misc/mediatek/gpu/mt6582/mali/mali/__malidrv_build_info.c
+kernel/kernel/hz.bc
+kernel/kernel/timeconst.h
+kernel/lib/crc32table.h
+kernel/lib/gen_crc32table
+kernel/net/wireless/regdb.c
+kernel/scripts/basic/fixdep
+kernel/scripts/kallsyms
+kernel/scripts/kconfig/conf
+kernel/scripts/kconfig/zconf.hash.c
+kernel/scripts/kconfig/zconf.lex.c
+kernel/scripts/kconfig/zconf.tab.c
+kernel/scripts/mod/devicetable-offsets.h
+kernel/scripts/mod/elfconfig.h
+kernel/scripts/mod/mk_elfconfig
+kernel/scripts/mod/modpost
+kernel/scripts/recordmcount
+kernel/scripts/selinux/genheaders/genheaders
+kernel/scripts/selinux/mdp/mdp
+kernel/scripts/sortextable
+kernel/scripts/bin2c
+kernel/scripts/pnmtologo
+kernel/security/selinux/av_permissions.h
+kernel/security/selinux/flask.h
+kernel/usr/gen_init_cpio
+kernel/usr/initramfs_data.cpio
+mediatek/custom/out/*
+mediatek/config/out/*/autoconfig/
+kernel/kernel/config_data.h
+kernel/kernel/debug/kdb/gen-kdb_cmds.c
+kernel/Download
+kernel/mediatek/custom/
+
+# logo images
+kernel/drivers/video/logo/clut_vga16.c
+kernel/drivers/video/logo/logo_blackfin_clut224.c
+kernel/drivers/video/logo/logo_blackfin_vga16.c
+kernel/drivers/video/logo/logo_dec_clut224.c
+kernel/drivers/video/logo/logo_linux_clut224.c
+kernel/drivers/video/logo/logo_linux_mono.c
+kernel/drivers/video/logo/logo_linux_vga16.c
+kernel/drivers/video/logo/logo_m32r_clut224.c
+kernel/drivers/video/logo/logo_mac_clut224.c
+kernel/drivers/video/logo/logo_parisc_clut224.c
+kernel/drivers/video/logo/logo_sgi_clut224.c
+kernel/drivers/video/logo/logo_spe_clut224.c
+kernel/drivers/video/logo/logo_sun_clut224.c
+kernel/drivers/video/logo/logo_superh_clut224.c
+kernel/drivers/video/logo/logo_superh_mono.c
+kernel/drivers/video/logo/logo_superh_vga16.c
+
+
+# stgit generated dirs
+patches-*
+
+# quilt's files
+patches
+series
+
+# cscope files
+cscope.*
+ncscope.*
+
+
+# MTK KK FILES
+makeMtk.ini
+VB-releases/
+out/
+
+# gnu global files
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+
+*.orig
+*.rej
+*~
+\#*#
