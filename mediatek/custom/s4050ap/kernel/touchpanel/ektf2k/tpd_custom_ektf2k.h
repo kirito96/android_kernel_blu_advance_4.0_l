@@ -8,9 +8,9 @@
 #define LCM_Y_MAX      800//simple_strtoul(LCM_HEIGHT, NULL, 0)
 
 //Elan Key's define
-#define ELAN_KEY_BACK		0x10
+#define ELAN_KEY_MENU		0x10
 #define ELAN_KEY_HOME		0x08
-#define ELAN_KEY_MENU		0x04
+#define ELAN_KEY_BACK		0x04
 #define ELAN_KEY_SEARCH 	0x11
 
 /////////////////////////////////////////////////////////
