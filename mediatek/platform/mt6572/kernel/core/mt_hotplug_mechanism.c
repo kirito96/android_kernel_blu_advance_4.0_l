@@ -41,7 +41,6 @@ static int g_enable = 1;
 * glabal variable
 **********************************/
 #ifdef CONFIG_HAS_EARLYSUSPEND
-static int g_enable = 0;
 static struct early_suspend mt_hotplug_mechanism_early_suspend_handler =
 {
     .level = EARLY_SUSPEND_LEVEL_DISABLE_FB + 250,
