@@ -85,8 +85,8 @@ static const char longname[] = "Gadget Android";
 //clj,DATE20150328, START
 //#define MANUFACTURER_STRING "MediaTek"
 //#define PRODUCT_STRING "MT65xx Android Phone"
-#define MANUFACTURER_STRING "SUNSET2"
-#define PRODUCT_STRING "SUNSET2"
+#define MANUFACTURER_STRING "BLU Advance 4.0"
+#define PRODUCT_STRING "BLU Advance 4.0"
 //clj,DATE20150328, END
 #define USB_LOG "USB"
 
