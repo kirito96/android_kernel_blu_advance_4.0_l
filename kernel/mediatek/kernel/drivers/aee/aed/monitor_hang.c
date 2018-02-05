@@ -267,7 +267,7 @@ extern void show_stack(struct task_struct *tsk, unsigned long *sp);
 static void ShowStatus (void) {
 	struct task_struct * task ;
 	for_each_process(task) {
-		printk_sched("[Hang_Detect] %s found:%d.,RT[%lld]\n", task->comm, task->pid, sched_clock());
+		printk_deferred("[Hang_Detect] %s found:%d.,RT[%lld]\n", task->comm, task->pid, sched_clock());
 		show_stack(task,NULL) ;
 	}
 }
