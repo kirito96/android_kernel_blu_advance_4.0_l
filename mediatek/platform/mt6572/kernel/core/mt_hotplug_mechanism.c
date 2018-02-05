@@ -31,7 +31,11 @@
 
 #endif //#ifdef CONFIG_HAS_EARLYSUSPEND
 
-
+#ifdef CONFIG_INTELLI_PLUG 
+static int g_enable = 0;
+#else
+static int g_enable = 1;
+#endif 
 
 /*********************************
 * glabal variable
