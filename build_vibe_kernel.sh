@@ -39,7 +39,7 @@ VB_VER="$BASE_VB_VER$VER-$DEVICE${LOCALVERSION}-$( date +%H%M )"
 export ARCH=arm
 export KBUILD_BUILD_USER=kirito9
 export KBUILD_BUILD_HOST=aincrad
-export CROSS_COMPILE=~/android/toolchain/arm-eabi-4.9/bin/arm-eabi-
+export CROSS_COMPILE=~/android/toolchain/arm-eabi-5.3/bin/arm-eabi-
 
 # Functions
 function clean_all {
