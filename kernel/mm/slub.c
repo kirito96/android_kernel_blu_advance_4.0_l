@@ -30,10 +30,10 @@
 #include <linux/fault-inject.h>
 #include <linux/stacktrace.h>
 #include <linux/prefetch.h>
-#include <linux/aee.h>
+
 
 #include <trace/events/kmem.h>
-#include <mach/mtk_memcfg.h>
+
 
 /*
  * Lock order:
@@ -637,7 +637,6 @@ static void object_err(struct kmem_cache *s, struct page *page,
 {
 	slab_bug(s, "%s", reason);
 	print_trailer(s, page, object);
-	BUG();
 }
 
 static void slab_err(struct kmem_cache *s, struct page *page, char *fmt, ...)
@@ -651,7 +650,6 @@ static void slab_err(struct kmem_cache *s, struct page *page, char *fmt, ...)
 	slab_bug(s, "%s", buf);
 	print_page_info(page);
 	dump_stack();
-	BUG();
 }
 
 static void init_object(struct kmem_cache *s, void *object, u8 val)
@@ -767,11 +765,6 @@ static int slab_pad_check(struct kmem_cache *s, struct page *page)
 	int length;
 	int remainder;
 
-#ifdef CONFIG_MTK_MEMCFG
-        if (unlikely(mtk_memcfg_get_bypass_slub_debug_flag())) {
-            return 1;
-        }
-#endif 
 	if (!(s->flags & SLAB_POISON))
 		return 1;
 
@@ -801,11 +794,6 @@ static int check_object(struct kmem_cache *s, struct page *page,
 	u8 *p = object;
 	u8 *endobject = object + s->objsize;
 
-#ifdef CONFIG_MTK_MEMCFG
-        if (unlikely(mtk_memcfg_get_bypass_slub_debug_flag())) {
-            return 1;
-        }
-#endif 
 	if (s->flags & SLAB_RED_ZONE) {
 		if (!check_bytes_and_report(s, page, object, "Redzone",
 			endobject, val, s->inuse - s->objsize))
@@ -1067,11 +1055,6 @@ static void setup_object_debug(struct kmem_cache *s, struct page *page,
 static noinline int alloc_debug_processing(struct kmem_cache *s, struct page *page,
 					void *object, unsigned long addr)
 {
-#ifdef CONFIG_MTK_MEMCFG
-        if (unlikely(mtk_memcfg_get_bypass_slub_debug_flag())) {
-            return 1;
-        }
-#endif 
 	if (!check_slab(s, page))
 		goto bad;
 
@@ -1110,11 +1093,6 @@ static noinline int free_debug_processing(struct kmem_cache *s,
 	unsigned long flags;
 	int rc = 0;
 
-#ifdef CONFIG_MTK_MEMCFG
-        if (unlikely(mtk_memcfg_get_bypass_slub_debug_flag())) {
-            return 1;
-        }
-#endif 
 	local_irq_save(flags);
 	slab_lock(page);
 
@@ -1308,11 +1286,8 @@ static inline struct page *alloc_slab_page(gfp_t flags, int node,
 	flags |= __GFP_NOTRACK;
 
 	if (node == NUMA_NO_NODE)
-#ifndef CONFIG_MTK_PAGERECORDER
+
 		return alloc_pages(flags, order);
-#else
-		return alloc_pages_nopagedebug(flags, order);
-#endif
 	else
 		return alloc_pages_exact_node(node, flags, order);
 }
@@ -1452,11 +1427,8 @@ static void __free_slab(struct kmem_cache *s, struct page *page)
 	reset_page_mapcount(page);
 	if (current->reclaim_state)
 		current->reclaim_state->reclaimed_slab += pages;
-#ifndef CONFIG_MTK_PAGERECORDER
+
 	__free_pages(page, order);
-#else
-	__free_pages_nopagedebug(page, order);
-#endif
 }
 
 #define need_reserve_slab_rcu						\
@@ -2648,7 +2620,7 @@ EXPORT_SYMBOL(kmem_cache_free);
  * take the list_lock.
  */
 static int slub_min_order;
-static int slub_max_order = PAGE_ALLOC_COSTLY_ORDER;
+static int slub_max_order;
 static int slub_min_objects;
 
 /*
@@ -4199,22 +4171,9 @@ static long validate_slab_cache(struct kmem_cache *s)
  * and freed.
  */
 
-#ifdef CONFIG_MTK_MEMCFG
-#define MTK_MEMCFG_SLABTRACE_CNT 4
-#endif 
-/* MTK_MEMCFG_SLABTRACE_CNT should be always <= TRACK_ADDRS_COUNT */
-#if (MTK_MEMCFG_SLABTRACE_CNT > TRACK_ADDRS_COUNT)
-#error (MTK_MEMCFG_SLABTRACE_CNT > TRACK_ADDRS_COUNT)
-#endif 
-
 struct location {
 	unsigned long count;
 	unsigned long addr;
-#ifdef CONFIG_MTK_MEMCFG
-#ifdef CONFIG_STACKTRACE
-	unsigned long addrs[MTK_MEMCFG_SLABTRACE_CNT];	/* Called from address */
-#endif
-#endif 
 	long long sum_time;
 	long min_time;
 	long max_time;
@@ -4233,13 +4192,9 @@ struct loc_track {
 static void free_loc_track(struct loc_track *t)
 {
 	if (t->max)
-#ifndef CONFIG_MTK_PAGERECORDER
+
 		free_pages((unsigned long)t->loc,
 			get_order(sizeof(struct location) * t->max));
-#else
-		__free_pages_nopagedebug((struct page *)t->loc,
-			get_order(sizeof(struct location) * t->max));
-#endif
 }
 
 static int alloc_loc_track(struct loc_track *t, unsigned long max, gfp_t flags)
@@ -4249,11 +4204,6 @@ static int alloc_loc_track(struct loc_track *t, unsigned long max, gfp_t flags)
 
 	order = get_order(sizeof(struct location) * max);
 
-#ifndef CONFIG_MTK_PAGERECORDER
-	l = (void *)__get_free_pages(flags, order);
-#else
-	l = (void *)__get_free_pages_nopagedebug(flags, order);
-#endif 
 	if (!l)
 		return 0;
 
