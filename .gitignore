@@ -142,6 +142,7 @@ ncscope.*
 # MTK KK FILES
 makeMtk.ini
 VB-releases/
+Vibe-AK2-s4050ap/zImage
 out/
 
 # gnu global files
